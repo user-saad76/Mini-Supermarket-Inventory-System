@@ -4,11 +4,12 @@ import java.util.Scanner;
 
 public class main {
 
-     static void SearchProduct(String search,String[] products,int[] price,int[] quantity){
+     static void SearchProduct(String search,String[] products,int[] price,int[] quantity,String[] FirstData){
          boolean isSearch = false;
            for(int x = 0;x<products.length;x++){
-               if(search.equalsIgnoreCase(products[x])){
-                   System.out.println(products[x] + "  " + price[x] + "  " + quantity[x] + "  ");
+               if(search.trim().equalsIgnoreCase(products[x].trim())){
+                   System.out.println(FirstData[0]  + "  " + FirstData[1]  + "  " + FirstData[2] + "  ");
+                   System.out.println(products[x] + "             " + price[x] + "                            " + quantity[x] + "           ");
                    isSearch = true;
                    break;
                }
@@ -17,6 +18,31 @@ public class main {
                System.out.println("Invaild choice");
            }
      }
+
+     static void ProductPurchase(String[] products,String purchase){
+          for(int x = 0;x<products.length;x++){
+              if(purchase.trim().equalsIgnoreCase(products[x].trim())){
+                  System.out.println("You have purchased " + products[x]);
+              }
+          }
+     }
+     static void QuantityReduce(String search,String[] product ,int[] quantity, int qty){
+         for(int x = 0;x<product.length;x++){
+             if(search.trim().equalsIgnoreCase(product[x].trim())){
+                 System.out.println(product[x] + " has available total " + quantity[x]);
+                 if(qty<quantity[x]){
+                     quantity[x] = qty;
+                     System.out.println("Now you have set quantity " + quantity[x] + " for " + product[x]);
+                 }
+                 break;
+             }
+         }
+
+
+     }
+
+
+
 
 
 
@@ -33,11 +59,11 @@ public class main {
         FirstData[0] = " Product Name : ";
         FirstData[1] = " Price (Rs.) : ";
         FirstData[2] = " Available quantity :  ";
-        products[0] = " 1. Rice ";
-        products[1] = " 2. Milk ";
-        products[2] = " 3. Bread  ";
-        products[3] = " 4. Eggs  ";
-        products[4] = " 5. Juice  ";
+        products[0] = " Rice ";
+        products[1] = " Milk ";
+        products[2] = " Bread  ";
+        products[3] = " Eggs  ";
+        products[4] = " Juice  ";
         price[0] = 250;
         price[1] = 150;
         price[2] = 180;
@@ -57,6 +83,23 @@ public class main {
             System.out.println(products[j] + "          " + price[j] + "                  " + quantity[j] + "                  ");
         }
         System.out.println();
+        System.out.println("**************************************");
+        System.out.print("Enter your name : ");
+        String name = input.nextLine();
+        System.out.print("Enter your email : ");
+        String email = input.nextLine();
+        System.out.print("Enter your address : ");
+        String address = input.nextLine();
+        System.out.print("Enter your phone number : ");
+        String phoneNumber = input.nextLine();
+        System.out.println();
+        System.out.println("*********************************");
+        System.out.println("Name : " + name);
+        System.out.println("Email Address : " + email);
+        System.out.println("Address : " + address);
+        System.out.println("phone number : " + phoneNumber);
+        System.out.println("**********************************");
+        System.out.println();
         System.out.println("*********************************");
         System.out.println("1. Product search ");
         System.out.println("2. Product purchase ");
@@ -75,16 +118,28 @@ public class main {
 
 
         int choice = 0;
-        while(choice!=10){
+        while(choice!=12){
             System.out.print("Enter choice : ");
              choice = input.nextInt();
              if(choice == 1){
                  input.nextLine();
                  System.out.print("Enter search : ");
                  String search = input.nextLine();
-                 SearchProduct(search,products, price, quantity);
+                 SearchProduct(search,products, price, quantity,FirstData);
              }
              else if(choice == 2){
+                  input.nextLine();
+                 System.out.print(" Enter your want to purchase from available items :  ");
+                 String purchase = input.nextLine();
+                 ProductPurchase(products,purchase);
+             }
+             else if(choice == 3){
+                 System.out.print("Enter search : ");
+                 String search = input.nextLine();
+                 System.out.println("Enter quantity you want : ");
+                 int qty = input.nextInt();
+                 QuantityReduce(search, products , quantity, qty);
+
 
              }
 
