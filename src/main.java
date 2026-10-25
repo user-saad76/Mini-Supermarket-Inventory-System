@@ -19,26 +19,45 @@ public class main {
            }
      }
 
-     static void ProductPurchase(String[] products,String purchase){
-          for(int x = 0;x<products.length;x++){
-              if(purchase.trim().equalsIgnoreCase(products[x].trim())){
-                  System.out.println("You have purchased " + products[x]);
-              }
-          }
-     }
+
      static void QuantityReduce(String search,String[] product ,int[] quantity, int qty){
+         boolean isVaildSearch = false;
          for(int x = 0;x<product.length;x++){
              if(search.trim().equalsIgnoreCase(product[x].trim())){
+                 System.out.println( " Product :  " + product[x]);
                  System.out.println(product[x] + " has available total " + quantity[x]);
-                 if(qty<quantity[x]){
-                     quantity[x] = qty;
-                     System.out.println("Now you have set quantity " + quantity[x] + " for " + product[x]);
+                 if(qty<=quantity[x]){
+                     quantity[x]=quantity[x]-qty;
+                     System.out.println("Now you have set quantity : " + qty);
+                     System.out.println("Available stock quantity " + quantity[x] + " for " + product[x]);
                  }
+                 isVaildSearch = true;
                  break;
              }
          }
+         if(!isVaildSearch){
+             System.out.println(" Invalid search ");
+         }
+     }
+     static void PurchaseProduct(String search,String[] product ,int[] quantity, int qty){
+         boolean isVaildSearch = false;
+         for(int x = 0;x<product.length;x++){
+             if(search.trim().equalsIgnoreCase(product[x].trim())){
+                 System.out.println(product[x] + " has available total " + quantity[x]);
+                 if(qty<=quantity[x]){
+                     quantity[x]=quantity[x]-qty;
+                     System.out.println("Now you have set quantity : " + qty);
+                     System.out.println(" Purchase successfully! ");
+                     System.out.println("Available stock quantity " + quantity[x] + " for " + product[x]);
 
-
+                 }
+                 isVaildSearch = true;
+                 break;
+             }
+         }
+         if(!isVaildSearch){
+             System.out.println(" Invalid search ");
+         }
      }
 
 
@@ -102,8 +121,8 @@ public class main {
         System.out.println();
         System.out.println("*********************************");
         System.out.println("1. Product search ");
-        System.out.println("2. Product purchase ");
-        System.out.println("3. Quantity reduce ");
+        System.out.println("2. Quantity reduce ");
+        System.out.println("3. Product purchase ");
         System.out.println("4. Total bill calculate ");
         System.out.println("5. Stock check ");
         System.out.println("6. Out-of-stock products");
@@ -115,8 +134,9 @@ public class main {
         System.out.println("12. Exit ");
         System.out.println("*********************************");
         System.out.println();
-
-
+        System.out.println("You have limit only purchased 4 items in once ");
+        int totallimit = 5;
+        int[] purchasedQuantity = new int[totallimit];
         int choice = 0;
         while(choice!=12){
             System.out.print("Enter choice : ");
@@ -128,20 +148,26 @@ public class main {
                  SearchProduct(search,products, price, quantity,FirstData);
              }
              else if(choice == 2){
-                  input.nextLine();
-                 System.out.print(" Enter your want to purchase from available items :  ");
-                 String purchase = input.nextLine();
-                 ProductPurchase(products,purchase);
-             }
-             else if(choice == 3){
+                 input.nextLine();
                  System.out.print("Enter search : ");
                  String search = input.nextLine();
                  System.out.println("Enter quantity you want : ");
                  int qty = input.nextInt();
                  QuantityReduce(search, products , quantity, qty);
-
+             }
+             else if(choice == 3){
+                 input.nextLine();
+                 System.out.print("Enter search : ");
+                 String search = input.nextLine();
+                 System.out.print("Enter quantity you want : ");
+                 int qty = input.nextInt();
+                 PurchaseProduct(search,products ,quantity, qty);
 
              }
+             else if(choice == 4){
+
+             }
+
 
 
         }
