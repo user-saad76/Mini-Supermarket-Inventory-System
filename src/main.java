@@ -66,12 +66,34 @@ public class main {
      static void TotalBillCalculate( int[] setQty,  int[] setPrice,  String[] purchasedProducts,int totallimit,int[] totalPrice){
          for(int x = 0;x<totallimit;x++){
              if(setPrice[x]!=0){
-                 System.out.println("Product: " + "           " + " Quantity : " + "               " + "Price : " + "          " + "Total Price: ");
+                 System.out.println("Product: " + "          " + " Quantity : " + "         " + "Price : " + "        " + "Total Price: ");
                  System.out.println(purchasedProducts[x] + "             " +  setQty[x] + "                  " + setPrice[x] + "                      " + totalPrice [x]);
              }
 
          }
      }
+     static void CheckingStock(String[] products,int[] quantity,int totalline){
+        for(int x = 0;x<totalline;x++){
+            System.out.println(products[x] + " has " + quantity[x] + " stocks" );
+        }
+     }
+     static void OutOfStockProduct(String[] products,int[] quantity,int totallimit){
+           boolean stockOut = false;
+           for(int x = 0;x<totallimit;x++){
+               if(quantity[x]==0){
+                   System.out.println(products[x] + " has " + quantity[x]);
+                   stockOut = true;
+               }
+           }
+           if(!stockOut){
+               System.out.println("There are no stock of out");
+           }
+     }
+     static void ExpensiveProduct(){
+
+     }
+
+
 
 
 
@@ -180,6 +202,25 @@ public class main {
                  System.out.println("***************Total bill calculate********************");
                  System.out.println();
                  TotalBillCalculate( setQty,  setPrice,  purchasedProducts, totallimit,totalPrice);
+                  int sum = 0;
+                  for(int x = 0;x<totalPrice.length;x++){
+                        sum  = sum + totalPrice[x];
+                   }
+                 System.out.println("Grand Total : " + sum);
+             }
+
+             else if(choice == 5){
+                 System.out.println("**************Stock of Products***************");
+                 System.out.println();
+                 CheckingStock(products,quantity,totallimit);
+             }
+             else if(choice == 6){
+                 System.out.println("***************Out-of-stock products*****************");
+                 OutOfStockProduct( products, quantity,totallimit);
+             }
+             else if(choice == 7){
+                 System.out.println("***************Cheapest product*************");
+
              }
 
 
