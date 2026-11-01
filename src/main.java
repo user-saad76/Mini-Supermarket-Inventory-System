@@ -20,16 +20,21 @@ public class main {
      }
 
 
-     static void QuantityReduce(String search,String[] product ,int[] quantity, int qty){
+     static void QuantityReduce(String search,String[] products ,int[] quantity, int qty,int[] price,String[] purchasedProducts,int[] setQty,int[] setPrice){
          boolean isVaildSearch = false;
-         for(int x = 0;x<product.length;x++){
-             if(search.trim().equalsIgnoreCase(product[x].trim())){
-                 System.out.println( " Product :  " + product[x]);
-                 System.out.println(product[x] + " has available total " + quantity[x]);
+         for(int x = 0;x<products.length;x++){
+             if(search.trim().equalsIgnoreCase(products[x].trim())){
+                 System.out.println( " Product :  " + products[x]);
+                 System.out.println(products[x] + " has available total " + quantity[x]);
+                 System.out.println(products[x] + " has price Rs " + price[x]);
+                 if(qty<0){
+                     System.out.println("You have set quantity invalid please try again !");
+                     break;
+                 }
                  if(qty<=quantity[x]){
                      quantity[x]=quantity[x]-qty;
                      System.out.println("Now you have set quantity : " + qty);
-                     System.out.println("Available stock quantity " + quantity[x] + " for " + product[x]);
+                     System.out.println("Available stock quantity " + quantity[x] + " for " + products[x]);
                  }
                  isVaildSearch = true;
                  break;
@@ -39,30 +44,34 @@ public class main {
              System.out.println(" Invalid search ");
          }
      }
-     static void PurchaseProduct(String search,String[] product ,int[] quantity, int qty){
-         boolean isVaildSearch = false;
-         for(int x = 0;x<product.length;x++){
-             if(search.trim().equalsIgnoreCase(product[x].trim())){
-                 System.out.println(product[x] + " has available total " + quantity[x]);
-                 if(qty<=quantity[x]){
-                     quantity[x]=quantity[x]-qty;
-                     System.out.println("Now you have set quantity : " + qty);
-                     System.out.println(" Purchase successfully! ");
-                     System.out.println("Available stock quantity " + quantity[x] + " for " + product[x]);
-
-                 }
-                 isVaildSearch = true;
-                 break;
+     static void PurchaseProduct(String search,String[] products,int[] price ,int[] quantity, int qty, String[]  purchasedProducts,int[] setQty,int[] setPrice, int[] setQuantity ,int[] totalPrice){
+              for(int x = 0;x<products.length;x++){
+                  if(search.trim().equalsIgnoreCase(products[x].trim())){
+                      System.out.println("You have purchased succesfully ");
+                      purchasedProducts[x] = search;
+                      setPrice[x] = price[x];
+                      setQty[x] = qty;
+                      setQuantity[x] = quantity[x];
+                      totalPrice[x] = setPrice[x]*setQty[x];
+                      System.out.println();
+                      System.out.println("******************");
+                      System.out.println("Product : " + purchasedProducts[x]);
+                      System.out.println("Set quantity : " + setQty[x]);
+                      System.out.println("Price: " + setPrice[x]);
+                      System.out.println("TotalPrice: " + totalPrice[x]);
+                      System.out.println("******************");
+                  }
+              }
+     }
+     static void TotalBillCalculate( int[] setQty,  int[] setPrice,  String[] purchasedProducts,int totallimit,int[] totalPrice){
+         for(int x = 0;x<totallimit;x++){
+             if(setPrice[x]!=0){
+                 System.out.println("Product: " + "           " + " Quantity : " + "               " + "Price : " + "          " + "Total Price: ");
+                 System.out.println(purchasedProducts[x] + "             " +  setQty[x] + "                  " + setPrice[x] + "                      " + totalPrice [x]);
              }
-         }
-         if(!isVaildSearch){
-             System.out.println(" Invalid search ");
+
          }
      }
-
-
-
-
 
 
 
@@ -135,8 +144,12 @@ public class main {
         System.out.println("*********************************");
         System.out.println();
         System.out.println("You have limit only purchased 4 items in once ");
-        int totallimit = 5;
-        int[] purchasedQuantity = new int[totallimit];
+        int totallimit = 5;;
+        String[] purchasedProducts = new String[totallimit];
+        int[] setQty = new int[totallimit];
+        int[] setPrice = new int[totallimit];
+        int[] totalPrice = new int[totallimit];
+         int[] setQuantity = new int[totallimit];
         int choice = 0;
         while(choice!=12){
             System.out.print("Enter choice : ");
@@ -151,9 +164,9 @@ public class main {
                  input.nextLine();
                  System.out.print("Enter search : ");
                  String search = input.nextLine();
-                 System.out.println("Enter quantity you want : ");
+                 System.out.print("Enter quantity you want : ");
                  int qty = input.nextInt();
-                 QuantityReduce(search, products , quantity, qty);
+                 QuantityReduce( search, products , quantity, qty, price, purchasedProducts, setQty, setPrice);
              }
              else if(choice == 3){
                  input.nextLine();
@@ -161,12 +174,15 @@ public class main {
                  String search = input.nextLine();
                  System.out.print("Enter quantity you want : ");
                  int qty = input.nextInt();
-                 PurchaseProduct(search,products ,quantity, qty);
-
+                 PurchaseProduct( search,products,price , quantity, qty,   purchasedProducts, setQty, setPrice,setQuantity, totalPrice);
              }
              else if(choice == 4){
-
+                 System.out.println("***************Total bill calculate********************");
+                 System.out.println();
+                 TotalBillCalculate( setQty,  setPrice,  purchasedProducts, totallimit,totalPrice);
              }
+
+
 
 
 
