@@ -44,7 +44,7 @@ public class main {
              System.out.println(" Invalid search ");
          }
      }
-     static void PurchaseProduct(String search,String[] products,int[] price ,int[] quantity, int qty, String[]  purchasedProducts,int[] setQty,int[] setPrice, int[] setQuantity ,int[] totalPrice){
+     static void PurchaseProduct(String search,String[] products,int[] price ,int[] quantity, int qty, String[]  purchasedProducts,int[] setQty,int[] setPrice, int[] setQuantity ,int[] totalPrice,int[] GrandTotal ){
               for(int x = 0;x<products.length;x++){
                   if(search.trim().equalsIgnoreCase(products[x].trim())){
                       System.out.println("You have purchased succesfully ");
@@ -60,10 +60,13 @@ public class main {
                       System.out.println("Price: " + setPrice[x]);
                       System.out.println("TotalPrice: " + totalPrice[x]);
                       System.out.println("******************");
+                      GrandTotal[x] = totalPrice[x];
+
                   }
               }
      }
-     static void TotalBillCalculate( int[] setQty,  int[] setPrice,  String[] purchasedProducts,int totallimit,int[] totalPrice){
+     static void TotalBillCalculate( int[] setQty,  int[] setPrice,  String[] purchasedProducts,int totallimit,int[] totalPrice ){
+
          for(int x = 0;x<totallimit;x++){
              if(setPrice[x]!=0){
                  System.out.println("Product: " + "          " + " Quantity : " + "         " + "Price : " + "        " + "Total Price: ");
@@ -89,11 +92,35 @@ public class main {
                System.out.println("There are no stock of out");
            }
      }
-     static void ExpensiveProduct(){
-
+     static void ExpensiveProduct(String[] products,int[] price){
+          int expensive = price[0];
+          String productName = products[0];
+          for(int x = 1;x<price.length;x++){
+              if(price[x]>expensive){
+                 expensive = price[x];
+                 productName = products[x];
+              }
+          }
+         System.out.println("The expensive product : " + productName + " has price " + expensive);
      }
+  static void CheapestProduct(String[] products,int[] price){
+      int cheapest = price[0];
+      String productName = products[0];
+      for(int x = 1;x<price.length;x++){
+          if(price[x]<cheapest){
+              cheapest = price[x];
+              productName = products[x];
+          }
+      }
+      System.out.println("The cheapest product : " + productName + " has price " + cheapest);
+  }
+  static void TotalSales(int[] GrandTotal){
+         int sum = 0;
+       for(int x = 0;x<GrandTotal.length;x++){
+           sum = sum + GrandTotal[x];
+       }
 
-
+  }
 
 
 
@@ -172,6 +199,7 @@ public class main {
         int[] setPrice = new int[totallimit];
         int[] totalPrice = new int[totallimit];
          int[] setQuantity = new int[totallimit];
+         int[] GrandTotal = new int[totallimit];
         int choice = 0;
         while(choice!=12){
             System.out.print("Enter choice : ");
@@ -196,7 +224,7 @@ public class main {
                  String search = input.nextLine();
                  System.out.print("Enter quantity you want : ");
                  int qty = input.nextInt();
-                 PurchaseProduct( search,products,price , quantity, qty,   purchasedProducts, setQty, setPrice,setQuantity, totalPrice);
+                 PurchaseProduct( search,products,price,quantity,qty, purchasedProducts, setQty, setPrice,setQuantity, totalPrice,GrandTotal);
              }
              else if(choice == 4){
                  System.out.println("***************Total bill calculate********************");
@@ -207,6 +235,7 @@ public class main {
                         sum  = sum + totalPrice[x];
                    }
                  System.out.println("Grand Total : " + sum);
+
              }
 
              else if(choice == 5){
@@ -219,7 +248,18 @@ public class main {
                  OutOfStockProduct( products, quantity,totallimit);
              }
              else if(choice == 7){
-                 System.out.println("***************Cheapest product*************");
+                 System.out.println("***************Most expensive product*************");
+                 ExpensiveProduct( products,price);
+
+             }
+             else if(choice == 8){
+                 System.out.println("****************Cheapest product****************");
+                 CheapestProduct(products,price);
+
+             }
+             else if(choice == 9){
+                 System.out.println("*************Total sales************");
+                 TotalSales(GrandTotal);
 
              }
 
