@@ -44,13 +44,17 @@ public class main {
              System.out.println(" Invalid search ");
          }
      }
-     static void PurchaseProduct(String search,String[] products,int[] price ,int[] quantity, int qty, String[]  purchasedProducts,int[] setQty,int[] setPrice, int[] setQuantity ,int[] totalPrice ){
+     static void PurchaseProduct(String search,String[] products,int[] price ,int[] quantity, int qty, String[]  purchasedProducts,int[] setQty,int[] setPrice, int[] setQuantity ,int[] totalPrice,  String[][] MultiplePurchase ,int y,  int[][] purchasedQuantity,  int[][] purchasedPrice){
               for(int x = 0;x<products.length;x++){
                   if(search.trim().equalsIgnoreCase(products[x].trim())){
                       System.out.println("You have purchased succesfully ");
                       purchasedProducts[x] = search;
                       setPrice[x] = price[x];
                       setQty[x] = qty;
+                      purchasedQuantity[y][x] = setQty[x];
+                      MultiplePurchase[y][x] =  purchasedProducts[x];
+                      purchasedPrice[y][x] = setPrice[x];
+
                       setQuantity[x] = quantity[x];
                       totalPrice[x] = setPrice[x]*setQty[x];
                       System.out.println();
@@ -141,12 +145,13 @@ public class main {
         String[][] MultiplePurchase = new String[5][5];
         int[][] purchasedQuantity = new int[5][5];
         int[][] purchasedPrice = new int[5][5];
+        String[] products = new String[5];
+        String[] FirstData = new String[3];
+        int[] price = new int[5];
+        int[] quantity = new int[5];
+
         for (int y = 0; y < 5; y++) {
             Scanner input = new Scanner(System.in);
-            String[] products = new String[5];
-            String[] FirstData = new String[3];
-            int[] price = new int[5];
-            int[] quantity = new int[5];
             FirstData[0] = " Product Name : ";
             FirstData[1] = " Price (Rs.) : ";
             FirstData[2] = " Available quantity :  ";
@@ -209,7 +214,6 @@ public class main {
             System.out.println();
             System.out.println("You have limit only purchased 4 items in once ");
             int totallimit = 5;
-            ;
             String[] purchasedProducts = new String[totallimit];
             int[] setQty = new int[totallimit];
             int[] setPrice = new int[totallimit];
@@ -238,8 +242,9 @@ public class main {
                     String search = input.nextLine();
                     System.out.print("Enter quantity you want : ");
                     int qty = input.nextInt();
-                    PurchaseProduct(search, products, price, quantity, qty, purchasedProducts, setQty, setPrice, setQuantity, totalPrice);
-                } else if (choice == 4) {
+                    PurchaseProduct( search, products, price , quantity, qty, purchasedProducts, setQty, setPrice, setQuantity , totalPrice,  MultiplePurchase , y, purchasedQuantity, purchasedPrice);
+                }
+                else if (choice == 4) {
                     System.out.println("***************Total bill calculate********************");
                     System.out.println();
                     CustomerData(name, email, phoneNumber);
@@ -271,10 +276,9 @@ public class main {
                     System.out.println("*************Total sales************");
                     TotalSales(price, setQty);
                 }
-
             }
-
-
+            System.out.println("*******************");
         }
     }
+
 }
